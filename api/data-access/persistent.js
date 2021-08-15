@@ -1,27 +1,27 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
+const fs = require("fs");
+const path = require("path");
+const util = require("util");
 
 const writeFilePromise = util.promisify(fs.writeFile);
 
-const { DATA_PATH } = require('../../config');
+const { DATA_PATH } = require("../../config");
 
 const persistentPath = path.join(DATA_PATH, `persistent.json`);
 
 if (!fs.existsSync(persistentPath)) {
-  console.log('hu');
-  fs.writeFileSync(persistentPath, '{}', 'utf-8');
+  console.log("hu");
+  fs.writeFileSync(persistentPath, "{}", "utf-8");
 }
 
-const cached = JSON.parse(fs.readFileSync(persistentPath, 'utf-8'));
+const cached = JSON.parse(fs.readFileSync(persistentPath, "utf-8"));
 
 const persist = async (data = {}) =>
   await writeFilePromise(
     persistentPath,
-    JSON.stringify(data, null, '  '),
-    'utf-8'
+    JSON.stringify(data, null, "  "),
+    "utf-8"
   );
 
 const persistentDataAccess = (collectionName) => {
@@ -43,7 +43,7 @@ const persistentDataAccess = (collectionName) => {
       // }
     },
 
-    update: async (id = '', newEntry = {}) => {
+    update: async (id = "", newEntry = {}) => {
       const found = collection.find((entry) => entry.id === id);
       if (found) {
         newEntry.id = id;
@@ -55,7 +55,7 @@ const persistentDataAccess = (collectionName) => {
         return false;
       }
     },
-    remove: async (id = '') => {
+    remove: async (id = "") => {
       const found = collection.find((entry) => entry.id === id);
       if (found) {
         const itemIndex = collection.indexOf(found);
@@ -68,12 +68,12 @@ const persistentDataAccess = (collectionName) => {
     },
 
     // keep async for consistency
-    read: async (id = '') => {
+    read: async (id = "") => {
       const found = collection.find((entry) => entry && entry.id === id);
       return found;
     },
 
-    find: async (key = '', value) => {
+    find: async (key = "", value) => {
       const found = collection.find((entry) =>
         util.isDeepStrictEqual(entry[key], value)
       );
@@ -82,7 +82,7 @@ const persistentDataAccess = (collectionName) => {
 
     all: async () => {
       return collection;
-    }
+    },
   };
 };
 

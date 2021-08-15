@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const cached = {};
 
@@ -20,7 +20,7 @@ const notPersistentDataAccess = (collectionName) => {
       // }
     },
 
-    update: async (id = '', newEntry = {}) => {
+    update: async (id = "", newEntry = {}) => {
       const found = collection.find((entry) => entry.id === id);
       if (found) {
         newEntry.id = id;
@@ -31,7 +31,7 @@ const notPersistentDataAccess = (collectionName) => {
         return false;
       }
     },
-    remove: async (id = '') => {
+    remove: async (id = "") => {
       const found = collection.find((entry) => entry.id === id);
       if (found) {
         const itemIndex = collection.indexOf(found);
@@ -43,12 +43,12 @@ const notPersistentDataAccess = (collectionName) => {
     },
 
     // keep async for consistency
-    read: async (id = '') => {
+    read: async (id = "") => {
       const found = collection.find((entry) => entry && entry.id === id);
       return found;
     },
 
-    find: async (key = '', value) => {
+    find: async (key = "", value) => {
       const found = collection.find((entry) =>
         util.isDeepStrictEqual(entry[key], value)
       );

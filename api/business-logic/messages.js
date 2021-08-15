@@ -1,8 +1,8 @@
-const objectId = require('objectid');
+const objectId = require("objectid");
 
-const persistentDataAccess = require('../data-access/persistent');
+const persistentDataAccess = require("../data-access/persistent");
 
-const messageStore = persistentDataAccess('messages');
+const messageStore = persistentDataAccess("messages");
 
 const messageManager = {
   createMessage: async (user, messageContent, channelId) => {
@@ -12,7 +12,7 @@ const messageManager = {
     // TODO: implement
   },
   removeMessage: async (messageId) => {
-   // TODO: implement
+    // TODO: implement
   },
   getMessage: async (messageId) => {
     // TODO: implement
@@ -21,8 +21,8 @@ const messageManager = {
     // TODO: implement
   },
   getMessagesForChannel: async (channelId) => {
-   // TODO: implement
-  }
+    // TODO: implement
+  },
 };
 
 module.exports = messageManager;
