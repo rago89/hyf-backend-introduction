@@ -26,6 +26,7 @@ const notPersistentDataAccess = (collectionName) => {
         newEntry.id = id;
         const itemIndex = collection.indexOf(found);
         collection[itemIndex] = newEntry;
+        return true;
       } else {
         // or error?
         return false;
