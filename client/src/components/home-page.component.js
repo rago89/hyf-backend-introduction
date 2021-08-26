@@ -1,35 +1,39 @@
 import { fetchChannels, fetchMessagesForChannel } from "../api-calls/calls.js";
 import { state } from "../state/state.js";
-import { sendMessage, channelClicked, addChannel } from "../handlers/handlers.js";
+import {
+  sendMessage,
+  channelClicked,
+  addChannel,
+} from "../handlers/handlers.js";
 
 export const homePage = async () => {
-  const el = document.createElement('div');
-  el.style = 'height:100%;';
+  debugger;
+  const el = document.createElement("div");
+  el.style = "height:100%;";
 
-  const headerEl = document.createElement('div');
-  headerEl.classList.add('header');
+  const headerEl = document.createElement("div");
+  headerEl.classList.add("header");
   headerEl.innerHTML = getHeaderInnerHtml();
   el.appendChild(headerEl);
 
-  const mainEl = document.createElement('div');
-  mainEl.classList.add('main');
+  const mainEl = document.createElement("div");
+  mainEl.classList.add("main");
 
-  const channelListingsEl = document.createElement('div');
-  channelListingsEl.classList.add('listings');
+  const channelListingsEl = document.createElement("div");
+  channelListingsEl.classList.add("listings");
   mainEl.appendChild(channelListingsEl);
 
-  const messageHistoryEl = document.createElement('div');
-  messageHistoryEl.classList.add('message-history');
+  const messageHistoryEl = document.createElement("div");
+  messageHistoryEl.classList.add("message-history");
   mainEl.appendChild(messageHistoryEl);
 
   el.appendChild(mainEl);
 
   state.username = prompt("Please enter your username");
 
-  const footerEl = document.createElement('div');
-  footerEl.classList.add('footer');
-  footerEl.innerHTML = 
-  `
+  const footerEl = document.createElement("div");
+  footerEl.classList.add("footer");
+  footerEl.innerHTML = `
   <div class="user-menu"><span class="user-menu_profile-pic"></span>
   <button id="btn-add-channel">
     Add channel
@@ -44,17 +48,17 @@ export const homePage = async () => {
   registerUpdates(headerEl, channelListingsEl, messageHistoryEl);
 
   // register event handlers:
-  document.addEventListener("keyup", function(event) {
+  document.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-        sendMessage();
+      sendMessage();
     }
   });
 
-  channelListingsEl.addEventListener('click', channelClicked);
-  footerEl.addEventListener('click', addChannel);
+  channelListingsEl.addEventListener("click", channelClicked);
+  footerEl.addEventListener("click", addChannel);
 
   return el;
-}
+};
 
 const registerUpdates = (headerEl, channelListEl, messagesEl) => {
   setInterval(async () => {
@@ -64,18 +68,20 @@ const registerUpdates = (headerEl, channelListEl, messagesEl) => {
     channelListEl.innerHTML = getChannelListInnerHtml(channels);
     messagesEl.innerHTML = getMessagesInnerHtml(messages);
   }, 300);
-}
+};
 
 const getChannelListInnerHtml = (channels) => {
-  const channelEntriesHtml = channels.map(c => {
-    if (state.currentChannelId === c.id) {
-      return `<li data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel active"><a data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel_name">
+  const channelEntriesHtml = channels
+    .map((c) => {
+      if (state.currentChannelId === c.id) {
+        return `<li data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel active"><a data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel_name">
       <span data-channel-id="${c.id}" data-channel-name="${c.name}"><span data-channel-id="${c.id}" data-channel-name="${c.name}" class="prefix">#</span>${c.name}</span></a></li>`;
-    } else {
-      return `<li data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel"><a data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel_name">
+      } else {
+        return `<li data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel"><a data-channel-id="${c.id}" data-channel-name="${c.name}" class="channel_name">
       <span data-channel-id="${c.id}" data-channel-name="${c.name}"><span data-channel-id="${c.id}" data-channel-name="${c.name}" class="prefix">#</span>${c.name}</span></a></li>`;
-    }
-  }).join('');
+      }
+    })
+    .join("");
 
   return `
   <div class="listings_channels">
@@ -85,10 +91,12 @@ const getChannelListInnerHtml = (channels) => {
     </ul>
   </div>
       `;
-}
+};
 
 const getMessagesInnerHtml = (messages) => {
-  return messages.map(m => `
+  return messages
+    .map(
+      (m) => `
   <div class="message">
     <a class="message_profile-pic" href=""></a>
     <a class="message_username" href="">${m.user}</a>
@@ -98,15 +106,17 @@ const getMessagesInnerHtml = (messages) => {
      ${m.text}
     </span>
   </div>
-  `).join('');
-}
+  `
+    )
+    .join("");
+};
 
 const getHeaderInnerHtml = () => {
   return `
 <div class="team-menu">Team Awesome</div>
 <div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>                ${state.currentChannelName}</span></div>
   `;
-}
+};
 
 /**
  * `

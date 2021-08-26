@@ -1,9 +1,11 @@
 // let's import the default configuration
-const defaults = require('./default');
+const defaults = require("./default");
 
 // if the server is starting in a specific environment, we'll use that
 // if not, we will use "develop" by default
-const configEnv = process.env.NODE_ENV || 'development';
+
+// process.env.NODE_ENV is set by default in the package.json
+const configEnv = process.env.NODE_ENV || "development";
 
 // construct the path to the config module
 // can you guess what could wrong here?

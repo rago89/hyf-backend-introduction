@@ -20,6 +20,14 @@
     {
       "id": "611e035ad1bd38e80e000001",
       "name": "hyf"
+    },
+    {
+      "id": "6123635c4afc47b90d000001",
+      "name": "hello"
+    },
+    {
+      "id": "612364a14afc47b90d000002",
+      "name": "re pez"
     }
   ],
   "messages": [
@@ -85,6 +93,20 @@
       "user": "rafael",
       "channelId": "undefined",
       "date": "2021-08-19T07:11:24.042Z"
+    },
+    {
+      "text": "my first message",
+      "id": "612367104afc47b90d000003",
+      "user": "rago",
+      "channelId": "612364a14afc47b90d000002",
+      "date": "2021-08-23T09:14:56.178Z"
+    },
+    {
+      "text": "my second message",
+      "id": "612491304afc47b90d000004",
+      "user": "rago",
+      "channelId": "612364a14afc47b90d000002",
+      "date": "2021-08-24T06:26:56.216Z"
     }
   ]
 }

@@ -4,17 +4,21 @@ const fs = require("fs");
 const path = require("path");
 const util = require("util");
 
+// util.promisify a way to create promises
 const writeFilePromise = util.promisify(fs.writeFile);
 
 const { DATA_PATH } = require("../../config");
 
+// joins data path and add as last extension the filename
 const persistentPath = path.join(DATA_PATH, `persistent.json`);
 
+// if there is not a new file
 if (!fs.existsSync(persistentPath)) {
   console.log("hu");
+  // create a new file
   fs.writeFileSync(persistentPath, "{}", "utf-8");
 }
-
+// read the created file
 const cached = JSON.parse(fs.readFileSync(persistentPath, "utf-8"));
 
 const persist = async (data = {}) =>
@@ -23,7 +27,7 @@ const persist = async (data = {}) =>
     JSON.stringify(data, null, "  "),
     "utf-8"
   );
-
+// add a new array
 const persistentDataAccess = (collectionName) => {
   if (!(collectionName in cached)) {
     cached[collectionName] = [];
