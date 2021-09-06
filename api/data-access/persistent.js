@@ -2,8 +2,9 @@
 
 const fs = require("fs");
 const path = require("path");
+// The Util module provides access to some utility functions
 const util = require("util");
-
+// used to return responses in promise
 const writeFilePromise = util.promisify(fs.writeFile);
 
 const { DATA_PATH } = require("../../config");
@@ -16,7 +17,7 @@ if (!fs.existsSync(persistentPath)) {
 }
 
 const cached = JSON.parse(fs.readFileSync(persistentPath, "utf-8"));
-
+// clean the data to be written
 const persist = async (data = {}) =>
   await writeFilePromise(
     persistentPath,

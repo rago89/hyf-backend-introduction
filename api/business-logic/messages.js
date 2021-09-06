@@ -18,7 +18,7 @@ const messageManager = {
     // TODO: implement
   },
   getAllMessages: async () => {
-    // TODO: implement
+    messageStore.all();
   },
   getMessagesForChannel: async (channelId) => {
     // TODO: implement
