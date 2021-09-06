@@ -20,12 +20,19 @@ const messageController = {
     res.send("Not yet implemented");
   },
   post: async (req, res) => {
-    // creates a new message based on the passed body
-    const id = req.params.id;
-    const body = req.body;
-    const newMessage = messageManager.createMessage(body);
-    // TODO implement
-    res.send("message created");
+    try {
+      const channelId = req.params.id;
+      const message = req.body.text;
+      const user = req.body.user;
+      const newMessage = await messageManager.createMessage(
+        user,
+        message,
+        channelId
+      );
+      res.status(200).send(JSON.stringify(newMessage));
+    } catch (err) {
+      res.status(500).send(err);
+    }
   },
   delete: async (req, res) => {
     // deleted the message with the specified id

@@ -6,7 +6,15 @@ const messageStore = persistentDataAccess("messages");
 
 const messageManager = {
   createMessage: async (user, messageContent, channelId) => {
-    // TODO: implement
+    const message = {
+      user: user,
+      id: objectId().toString(),
+      text: messageContent,
+      channelId: channelId,
+      date: new Date(),
+    };
+    await messageStore.create(message);
+    return message;
   },
   updateMessage: async (message) => {
     // TODO: implement
