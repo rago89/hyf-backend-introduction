@@ -48,10 +48,10 @@ const persistentDataAccess = (collectionName) => {
       const found = collection.find((entry) => entry.id === id);
       if (found) {
         newEntry.id = id;
+        newEntry.date = new Date();
         const itemIndex = collection.indexOf(found);
         collection[itemIndex] = newEntry;
         await persist(cached);
-        return true;
       } else {
         // or error?
         return false;

@@ -1,28 +1,40 @@
+const { restart } = require("nodemon");
 const messageManager = require("../business-logic/messages");
 
 const messageController = {
   get: async (req, res) => {
-    // returns all messages currently in the system
-    const messages = messageManager.getAllMessages();
-    // TODO implement
-    res.send(JSON.stringify(messages));
+    try {
+      const messages = await messageManager.getAllMessages();
+      res.send(JSON.stringify(messages));
+    } catch (error) {
+      res.status(500).send(error);
+    }
   },
   getMessagesForChannel: async (req, res) => {
-    // returns the messages that belong in the channel with the specified id
-    // passed as /api/channels/:channelId/messages
-    // TODO implement
-    res.send(JSON.stringify([]));
+    try {
+      const channelId = req.params.channelId;
+      const messages = await messageManager.getMessagesForChannel(channelId);
+      res.send(JSON.stringify(messages));
+    } catch (error) {
+      res.status(400).send(error.name + ": " + error.message);
+    }
   },
   put: async (req, res) => {
-    // updates the messages with the specified id
-    // passed as /api/messages/:messageId
-    // TODO implement
-    res.send("Not yet implemented");
+    try {
+      const body = req.body;
+      const modifyMessage = await messageManager.updateMessage(body);
+      res.status(200).send(modifyMessage);
+      if (newData.id !== messageId) {
+        throw Error("Cannot change channel ID after creation!");
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
   },
   post: async (req, res) => {
     try {
-      const channelId = req.params.id;
-      const message = req.body.text;
+      const channelId = req.params.channelId;
+      const message = req.body.message;
       const user = req.body.user;
       const newMessage = await messageManager.createMessage(
         user,
@@ -35,10 +47,17 @@ const messageController = {
     }
   },
   delete: async (req, res) => {
-    // deleted the message with the specified id
-    // passed as /api/messages/:messageId
-    // TODO implement
-    res.send("Not yet implemented");
+    try {
+      const messageId = req.params.messageId;
+      await messageManager.removeMessage(messageId);
+      res.status(200).send(
+        JSON.stringify({
+          message: `Message with id ${messageId} was successfully deleted!`,
+        })
+      );
+    } catch (error) {
+      res.status(400).send(error);
+    }
   },
 };
 

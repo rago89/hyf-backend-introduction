@@ -9,7 +9,7 @@ messageRoutes.use((req, res, next) => {
 });
 // get all messages
 messageRoutes.get("/messages", messageController.get);
-// get an specific message
+// get messages from an specific channel
 messageRoutes.get(
   "/channels/:channelId/messages",
   messageController.getMessagesForChannel

@@ -17,19 +17,27 @@ const messageManager = {
     return message;
   },
   updateMessage: async (message) => {
-    // TODO: implement
+    return await messageStore.update(message.id, message);
   },
   removeMessage: async (messageId) => {
-    // TODO: implement
+    return await messageStore.remove(messageId);
   },
   getMessage: async (messageId) => {
     // TODO: implement
   },
   getAllMessages: async () => {
-    messageStore.all();
+    return await messageStore.all();
   },
   getMessagesForChannel: async (channelId) => {
-    // TODO: implement
+    const allMessages = await messageStore.all();
+    const channelMessages = allMessages.filter(
+      (bodyMessage) => bodyMessage.channelId === channelId
+    );
+    if (channelMessages.length === 0) {
+      throw new Error("There are not messages with the specified channel");
+    }
+
+    return channelMessages;
   },
 };
 
