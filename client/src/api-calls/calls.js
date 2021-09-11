@@ -53,3 +53,18 @@ export const postMessage = async (message) => {
     message: message,
   });
 };
+
+export const postUser = async () => {
+  return await performPost(`register`, {
+    user: state.username,
+    password: state.password,
+    email: state.email,
+  });
+};
+
+export const login = async () => {
+  return await performPost(`login`, {
+    user: state.username,
+    password: state.password,
+  });
+};

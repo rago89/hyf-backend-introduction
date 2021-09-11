@@ -3,10 +3,10 @@ const messageController = require("../controllers/messages");
 // create sub-route
 const messageRoutes = express.Router();
 // test the route using a middleware
-messageRoutes.use((req, res, next) => {
-  console.log("api!");
-  next();
-});
+// messageRoutes.use((req, res, next) => {
+//   console.log("api!");
+//   next();
+// });
 // get all messages
 messageRoutes.get("/messages", messageController.get);
 // get messages from an specific channel

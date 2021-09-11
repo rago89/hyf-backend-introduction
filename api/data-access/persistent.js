@@ -36,12 +36,8 @@ const persistentDataAccess = (collectionName) => {
   return {
     create: async (entry = {}) => {
       collection.push(entry);
-      // try { // handle errors here or in logic?
       await persist(cached);
       return true;
-      // } catch (err) {
-      //   return err;
-      // }
     },
 
     update: async (id = "", newEntry = {}) => {
@@ -59,14 +55,13 @@ const persistentDataAccess = (collectionName) => {
     },
     remove: async (id = "") => {
       const found = collection.find((entry) => entry.id === id);
-      if (found) {
-        const itemIndex = collection.indexOf(found);
-        collection.splice(itemIndex, 1);
-        await persist(cached);
-      } else {
-        // or error?
-        return false;
+      console.log(found);
+      if (!found) {
+        throw new Error(`cannot delete, the given id: ${id} was not found`);
       }
+      const itemIndex = collection.indexOf(found);
+      collection.splice(itemIndex, 1);
+      await persist(cached);
     },
 
     // keep async for consistency
@@ -75,10 +70,15 @@ const persistentDataAccess = (collectionName) => {
       return found;
     },
 
-    find: async (key = "", value) => {
-      const found = collection.find((entry) =>
-        util.isDeepStrictEqual(entry[key], value)
-      );
+    find: async (userOrEmail, password) => {
+      const found = collection.find((entry) => {
+        if (
+          (userOrEmail === entry.userName && password === entry.password) ||
+          (userOrEmail === entry.email && password === entry.password)
+        ) {
+          return entry;
+        }
+      });
       return found;
     },
 

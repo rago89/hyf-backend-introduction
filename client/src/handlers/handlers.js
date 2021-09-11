@@ -1,5 +1,5 @@
 import { state } from "../state/state.js";
-import { postChannel, postMessage } from "../api-calls/calls.js";
+import { postChannel, postMessage, postUser } from "../api-calls/calls.js";
 
 export const channelClicked = (event) => {
   if (!event.target.dataset.channelId) {
@@ -20,3 +20,32 @@ export const addChannel = async (event) => {
     await postChannel(channelName);
   }
 };
+
+export const register = async (event) => {
+  if (event.target.innerHTML === "Register") {
+    getUserRegistration();
+    await postUser();
+  }
+};
+
+export const login = async (event) => {
+  if (event.target.innerHTML === "Login") {
+    getUserLogin();
+    const userLog = await login();
+    const userLogParsed = JSON.parse(userLog);
+    state.token = userLogParsed.user.token;
+    // const sessionId =  await
+    console.log(state.token);
+  }
+};
+
+function getUserRegistration() {
+  state.username = prompt("Please enter username");
+  state.password = prompt("please enter a password");
+  state.email = prompt("please enter email");
+}
+
+async function getUserLogin() {
+  state.username = prompt("Please enter username or email");
+  state.password = prompt("please enter a password");
+}

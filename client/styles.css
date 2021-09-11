@@ -5,14 +5,14 @@
 
 #btn-add-channel {
   background-color: #4c9689; /* Green */
-  border: none;
   color: white;
   padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin-left: -25px;
+  border-color: #372c36;
+  cursor: pointer;
 }
 
 .reset,
@@ -233,6 +233,12 @@ main {
   left: 0;
   height: 53px;
   width: 100%;
+}
+
+.header .buttonsLog {
+  float: right;
+  margin: 15px;
+  margin-top: -50px;
 }
 
 .main {

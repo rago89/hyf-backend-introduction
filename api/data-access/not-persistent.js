@@ -49,10 +49,15 @@ const notPersistentDataAccess = (collectionName) => {
       return found;
     },
 
-    find: async (key = "", value) => {
-      const found = collection.find((entry) =>
-        util.isDeepStrictEqual(entry[key], value)
-      );
+    find: async (userOrEmail, password) => {
+      const found = collection.find((entry) => {
+        if (
+          (userOrEmail === entry.user && password === entry.password) ||
+          (userOrEmail === entry.email && password === entry.password)
+        ) {
+          return entry;
+        }
+      });
       return found;
     },
   };

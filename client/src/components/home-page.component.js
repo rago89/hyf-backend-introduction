@@ -4,6 +4,8 @@ import {
   sendMessage,
   channelClicked,
   addChannel,
+  register,
+  login,
 } from "../handlers/handlers.js";
 
 export const homePage = async () => {
@@ -28,7 +30,7 @@ export const homePage = async () => {
 
   el.appendChild(mainEl);
 
-  state.username = prompt("Please enter your username");
+  // state.username = prompt("Please enter your username");
 
   const footerEl = document.createElement("div");
   footerEl.classList.add("footer");
@@ -49,13 +51,18 @@ export const homePage = async () => {
   // register event handlers:
   document.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-      alert("Enter is pressed!");
+      // alert("Enter is pressed!");
       sendMessage();
     }
   });
 
   channelListingsEl.addEventListener("click", channelClicked);
   footerEl.addEventListener("click", addChannel);
+
+  // add handler to register and login button
+
+  headerEl.addEventListener("click", register);
+  headerEl.addEventListener("click", login);
 
   return el;
 };
@@ -112,12 +119,14 @@ const getMessagesInnerHtml = (messages) => {
 };
 
 const getHeaderInnerHtml = () => {
+  if (!state.currentChannelName) {
+    state.currentChannelName = "Please select a channel";
+  }
   return `
 <div class="team-menu">Team Awesome</div>
-<div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>                ${state.currentChannelName}</span></div>
-  `;
+<div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>${state.currentChannelName}</span></div>
+<button id="btn-add-channel" class="buttonsLog">Register</button> <button id="btn-add-channel" class="buttonsLog">Login</button> `;
 };
-
 /**
  * `
   <div class="header">
