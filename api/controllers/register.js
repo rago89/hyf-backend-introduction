@@ -13,12 +13,15 @@ const registerController = {
       }
       const hashPassword = hashCreator(password);
       const hashEmail = hashCreator(email);
-      await registerBusinessLogic.registerManager.createUser(
+      const newUser = await registerBusinessLogic.registerManager.createUser(
         user,
         hashPassword,
         hashEmail
       );
-      res.status(200).send(`user ${user} was successfully added!`);
+      res.json({
+        message: `user ${user} was successfully added!`,
+        user: newUser,
+      });
     } catch (error) {
       res.status(400).send(error);
     }

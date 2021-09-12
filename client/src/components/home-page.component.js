@@ -5,7 +5,6 @@ import {
   channelClicked,
   addChannel,
   register,
-  login,
 } from "../handlers/handlers.js";
 
 export const homePage = async () => {
@@ -29,8 +28,6 @@ export const homePage = async () => {
   mainEl.appendChild(messageHistoryEl);
 
   el.appendChild(mainEl);
-
-  // state.username = prompt("Please enter your username");
 
   const footerEl = document.createElement("div");
   footerEl.classList.add("footer");
@@ -62,7 +59,6 @@ export const homePage = async () => {
   // add handler to register and login button
 
   headerEl.addEventListener("click", register);
-  headerEl.addEventListener("click", login);
 
   return el;
 };

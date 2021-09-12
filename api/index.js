@@ -11,10 +11,6 @@ const router = express.Router();
 //   next();
 // });
 
-router.get("/", (req, res) => {
-  res.send("api!");
-});
-
 // use routes
 router.use("/", registerRoute);
 router.use("/", loginRoute);

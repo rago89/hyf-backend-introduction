@@ -1,4 +1,4 @@
-const loginManager = require("../business-logic/login");
+const loginBusinessLogic = require("../business-logic/login");
 const registerBusinessLogic = require("../business-logic/register");
 const crypto = require("crypto");
 
@@ -7,8 +7,10 @@ const loginController = {
     try {
       const userOrEmail = req.body.user;
       const password = req.body.password;
+      console.log(userOrEmail);
+      console.log(password);
       if (!userOrEmail || !password) {
-        res.status(400).send("Username and password are required");
+        res.status(400).json({ message: "Username and password are required" });
         return;
       }
       const hashPassword = hashCreator(password);
@@ -16,27 +18,29 @@ const loginController = {
         userOrEmail,
         hashPassword
       );
-      console.log(userRegistered);
       if (!userRegistered) {
-        res.status(400).send("username or password incorrect");
+        res.status(400).json({ message: "username or password incorrect" });
         return;
       }
       const userId = userRegistered.id;
       const userName = userRegistered.userName;
       const token = crypto.randomBytes(64).toString("hex");
-      console.log(token);
-      const newLog = await loginManager.createLog(token, userId);
+      const newLog = await loginBusinessLogic.loginManager.createLog(
+        token,
+        userId,
+        userName
+      );
       res.json({
-        message: `user ${userName} was successfully logged`,
+        message: `user "${userName}" was successfully logged`,
         user: newLog,
       });
     } catch (error) {
-      res.status(400).send("error while login");
+      res.status(400).json({ message: "error while login" });
     }
   },
   getAllLogins: async (req, res) => {
     try {
-      const users = await loginManager.getAllLogs();
+      const users = await loginBusinessLogic.loginManager.getAllLogs();
       res.send(JSON.stringify(users));
     } catch (error) {
       res.status(500).send(error);
@@ -45,7 +49,7 @@ const loginController = {
   getLogin: async (req, res) => {
     try {
       const userId = req.params.userId;
-      const user = await loginManager.getLog(userId);
+      const user = await loginBusinessLogic.loginManager.getLog(userId);
       res.status(200).send(JSON.stringify(user));
     } catch (error) {
       res.status(400).send(error);
@@ -54,7 +58,7 @@ const loginController = {
   deleteLogin: async (req, res) => {
     try {
       const userId = req.params.userId;
-      const user = await loginManager.deleteLog(userId);
+      const user = await loginBusinessLogic.loginManager.deleteLog(userId);
       res.status(200).send("user deleted");
     } catch (error) {
       res.status(500).send(error.message);

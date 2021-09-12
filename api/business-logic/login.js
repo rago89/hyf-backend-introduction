@@ -1,27 +1,28 @@
 const persistentDataAccess = require("../data-access/persistent");
 
-const registerStore = persistentDataAccess("sessions");
+const loginStore = persistentDataAccess("sessions");
 
 const loginManager = {
-  createLog: async (token, id) => {
+  createLog: async (token, id, userName) => {
     const userLog = {
       id: id,
       token: token,
+      user: userName,
       date: new Date(),
     };
-    await registerStore.create(userLog);
+    await loginStore.create(userLog);
     return userLog;
   },
 
   getLog: async (userId) => {
-    return await registerStore.read(userId);
+    return await loginStore.read(userId);
   },
   getAllLogs: async () => {
-    return await registerStore.all();
+    return await loginStore.all();
   },
   deleteLog: async (userId) => {
-    return await registerStore.remove(userId);
+    return await loginStore.remove(userId);
   },
 };
 
-module.exports = loginManager;
+module.exports = { loginManager, loginStore };

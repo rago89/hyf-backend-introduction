@@ -10,7 +10,6 @@ const cors = require("cors");
 
 const api = require("./api");
 const config = require("./config");
-
 const app = express();
 
 app.use(cors());

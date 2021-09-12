@@ -82,6 +82,11 @@ const persistentDataAccess = (collectionName) => {
       return found;
     },
 
+    findToken: async (token) => {
+      const found = collection.find((entry) => entry.token === token);
+      return found;
+    },
+
     all: async () => {
       return collection;
     },

@@ -1,19 +1,17 @@
 const express = require("express");
 const messageController = require("../controllers/messages");
+
 // create sub-route
 const messageRoutes = express.Router();
-// test the route using a middleware
-// messageRoutes.use((req, res, next) => {
-//   console.log("api!");
-//   next();
+
+// messageRoutes.use( (req, res, next)=> {
+//   tokenChecker(req, res, next)
 // });
+
 // get all messages
-messageRoutes.get("/messages", messageController.get);
+messageRoutes.get('/messages', messageController.get);
 // get messages from an specific channel
-messageRoutes.get(
-  "/channels/:channelId/messages",
-  messageController.getMessagesForChannel
-);
+messageRoutes.get('/channels/:channelId/messages', messageController.getMessagesForChannel);
 // delete a message
 messageRoutes.delete("/messages/:messageId", messageController.delete);
 // update a message

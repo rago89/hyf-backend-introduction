@@ -1,12 +1,18 @@
 import { state } from "../state/state.js";
 
-async function performFetch(path) {
+async function performFetch(path, body) {
   const URL = `${window.location.origin}/api/${path}`;
 
   const encodedURL = encodeURI(URL);
-  const response = await fetch(encodedURL);
+  const response = await fetch(encodedURL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `bearer ${state.token}`
+    },
+  });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}\n-> ${URL}`);
+    throw new Error(`HTTP error! status: ${response.status} ${response.message}\n-> ${URL}`);
   }
   const data = await response.json();
 
@@ -21,6 +27,7 @@ async function performPost(path, body) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `bearer ${state.token}`
     },
     body: JSON.stringify(body),
   });
