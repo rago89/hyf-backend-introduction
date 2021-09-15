@@ -1,11 +1,16 @@
-import { fetchChannels, fetchMessagesForChannel } from "../api-calls/calls.js";
-import { state } from "../state/state.js";
+import {
+  fetchChannels,
+  fetchMessagesForChannel,
+} from "../../api-calls/calls.js";
+import { state } from "../../state/state.js";
 import {
   sendMessage,
   channelClicked,
   addChannel,
   register,
-} from "../handlers/handlers.js";
+} from "../../handlers/handlers.js";
+
+// components
 
 export const homePage = async () => {
   const el = document.createElement("div");
@@ -43,7 +48,7 @@ export const homePage = async () => {
   `;
   el.appendChild(footerEl);
 
-  registerUpdates(headerEl, channelListingsEl, messageHistoryEl);
+  registerUpdates(channelListingsEl, messageHistoryEl);
 
   // register event handlers:
   document.addEventListener("keyup", function (event) {
@@ -63,9 +68,10 @@ export const homePage = async () => {
   return el;
 };
 
-const registerUpdates = (headerEl, channelListEl, messagesEl) => {
+const registerUpdates = (channelListEl, messagesEl) => {
   setInterval(async () => {
-    headerEl.innerHTML = getHeaderInnerHtml();
+    const headerChannelName = document.getElementById("channelHeaderName");
+    headerChannelName.innerHTML = state.currentChannelName;
     const messages = await fetchMessagesForChannel(state.currentChannelId);
     const channels = await fetchChannels();
     channelListEl.innerHTML = getChannelListInnerHtml(channels);
@@ -120,35 +126,6 @@ const getHeaderInnerHtml = () => {
   }
   return `
 <div class="team-menu">Team Awesome</div>
-<div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>${state.currentChannelName}</span></div>
+<div class="channel-menu"><span id="channelHeaderName" class="channel-menu_name"><span class="channel-menu_prefix">#</span>${state.currentChannelName}</span></div>
 <button id="btn-add-channel" class="buttonsLog">Register</button> <button id="btn-add-channel" class="buttonsLog">Login</button> `;
 };
-/**
- * `
-  <div class="header">
-    <div class="team-menu">Team Awesome</div>
-    <div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>                admin</span></div>
-  </div>
-  <div class="main">
-    <div class="listings">
-      <div class="listings_channels">
-        <h2 class="listings_header">Channels</h2>
-        <ul class="channel_list">
-          <li class="channel active"><a class="channel_name"><span class="unread">0</span><span><span class="prefix">#</span>admin</span></a></li>
-          <li class="channel"><a class="channel_name"><span class="unread">10</span><span><span class="prefix">#</span>general</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="message-history">
-      <div class="message"><a class="message_profile-pic" href=""></a><a class="message_username" href="">Chika</a><span class="message_timestamp">1:31 AM</span><span class="message_star"></span><span class="message_content">Slack Technologies, Inc. (originally Tiny Speck) is a computer software startup founded in 2009, with personnel located in Vancouver, San Francisco and Dublin. The core team is largely drawn from the founders of Ludicorp, the company that created Flickr. Slack is the fastest company to receive a billion dollar valuation.</span></div>
-      <div class="message"><a class="message_profile-pic" href=""></a><a class="message_username" href="">Chika</a><span class="message_timestamp">1:31 AM</span><span class="message_star"></span><span class="message_content">Rather than trying to make your own, use RocketMail instead.</span></div>
-    </div>
-  </div>
-  <div class="footer">
-    <div class="user-menu"><span class="user-menu_profile-pic"></span><span class="user-menu_username">Chika</span></div>
-    <div class="input-box">
-      <input class="input-box_text" type="text"/>
-    </div>
-  </div>
-  `
- */

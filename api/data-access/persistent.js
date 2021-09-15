@@ -35,9 +35,12 @@ const persistentDataAccess = (collectionName) => {
   //  throwing errors instead of returning false?
   return {
     create: async (entry = {}) => {
+      if (!entry) {
+        throw new Error(`Cannot create user, missing registration data`);
+      }
       collection.push(entry);
       await persist(cached);
-      return true;
+      return entry;
     },
 
     update: async (id = "", newEntry = {}) => {
@@ -70,8 +73,19 @@ const persistentDataAccess = (collectionName) => {
       return found;
     },
 
-    find: async (userOrEmail, password) => {
+    findUserByEmail: async (email) => {
+      const found = collection.find((entry) => entry.email === email);
+      return found;
+    },
+
+    findUserLog: async (userOrEmail, password) => {
       const found = collection.find((entry) => {
+        if (
+          (userOrEmail === entry.userName && password !== entry.password) ||
+          (userOrEmail === entry.email && password !== entry.password)
+        ) {
+          throw new Error("Password Incorrect");
+        }
         if (
           (userOrEmail === entry.userName && password === entry.password) ||
           (userOrEmail === entry.email && password === entry.password)

@@ -40,31 +40,12 @@
   ],
   "users": [
     {
-      "id": "613c618bb75fcd9f01000001",
+      "id": "613f0a918fda04223d000001",
       "userName": "rafael",
       "password": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
-      "email": "96656b2d0cdf15b29dff4923f1508ca7dea04ccf",
-      "date": "2021-09-11T07:58:03.497Z"
+      "email": "rafael@hyf.com",
+      "date": "2021-09-13T08:23:45.577Z"
     }
   ],
-  "sessions": [
-    {
-      "id": "613c618bb75fcd9f01000001",
-      "token": "a5c7efdf3a971fcdb24a6cd59edd97b538d4d8ad2bdd6da3fea76ad050993ab14facb0c6aabba3647bf096c8428cad830b34f8ead90a5c18e65988b73f8239cd",
-      "user": "rafael",
-      "date": "2021-09-12T07:05:10.917Z"
-    },
-    {
-      "id": "613c618bb75fcd9f01000001",
-      "token": "ec234e5e8e072788586cac9b543c6208e888b0210b0a15255ce9a878af222a7aa041e31976928d138b570762503aee96c46bb96efa6e99bb349ae5f7f02b11c8",
-      "user": "rafael",
-      "date": "2021-09-12T09:19:32.309Z"
-    },
-    {
-      "id": "613c618bb75fcd9f01000001",
-      "token": "38cbe1f6cc6e5ee366d46c65ac9a3553e8827b5432ef4e3d027b92c0f5c3df7f5aef1e7234acbf4066fc9e146756947a4efa4fad520e7f77b6132b99dc8e43a4",
-      "user": "rafael",
-      "date": "2021-09-12T10:52:23.319Z"
-    }
-  ]
+  "sessions": []
 }

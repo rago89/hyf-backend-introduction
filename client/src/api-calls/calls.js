@@ -8,11 +8,13 @@ async function performFetch(path, body) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `bearer ${state.token}`
+      Authorization: `bearer ${state.token}`,
     },
   });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status} ${response.message}\n-> ${URL}`);
+    throw new Error(
+      `HTTP error! status: ${response.status} ${response.message}\n-> ${URL}`
+    );
   }
   const data = await response.json();
 
@@ -27,12 +29,12 @@ async function performPost(path, body) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `bearer ${state.token}`
+      Authorization: `bearer ${!state.token ? "" : state.token}`,
     },
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}\n-> ${URL}`);
+    throw new Error(`HTTP error! status: ${response.message}\n-> ${URL}`);
   }
   const data = await response.json();
 

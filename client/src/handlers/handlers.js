@@ -15,9 +15,7 @@ export const channelClicked = (event) => {
 };
 
 export const sendMessage = async () => {
-    await postMessage(
-    document.getElementById("chat-field").value
-  );
+  await postMessage(document.getElementById("chat-field").value);
   document.getElementById("chat-field").value = "";
 };
 
@@ -43,7 +41,6 @@ export const register = async (event) => {
       state.token = userLog.user.token;
       state.userId = userLog.user.id;
     }
-    console.log(state)
     alert(userLog.message);
   }
 };
@@ -57,5 +54,4 @@ function getUserRegistration() {
 function getUserLogin() {
   state.username = prompt("Please enter username or email");
   state.password = prompt("please enter a password");
-
 }

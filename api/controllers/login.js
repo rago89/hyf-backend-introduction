@@ -7,19 +7,18 @@ const loginController = {
     try {
       const userOrEmail = req.body.user;
       const password = req.body.password;
-      console.log(userOrEmail);
-      console.log(password);
       if (!userOrEmail || !password) {
-        res.status(400).json({ message: "Username and password are required" });
+        res.status(401).json({ message: "Username and password are required" });
         return;
       }
       const hashPassword = hashCreator(password);
-      const userRegistered = await registerBusinessLogic.registerStore.find(
-        userOrEmail,
-        hashPassword
-      );
+      const userRegistered =
+        await registerBusinessLogic.registerStore.findUserLog(
+          userOrEmail,
+          hashPassword
+        );
       if (!userRegistered) {
-        res.status(400).json({ message: "username or password incorrect" });
+        res.status(401).json({ message: "You need to register to login" });
         return;
       }
       const userId = userRegistered.id;
@@ -35,7 +34,7 @@ const loginController = {
         user: newLog,
       });
     } catch (error) {
-      res.status(400).json({ message: "error while login" });
+      res.send(error.message);
     }
   },
   getAllLogins: async (req, res) => {

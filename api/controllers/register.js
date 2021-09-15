@@ -11,12 +11,20 @@ const registerController = {
         res.status(400).send("Username, password and email are required");
         return;
       }
+      const matchEmail =
+        await registerBusinessLogic.registerStore.findUserByEmail(email);
+
+      if (matchEmail)
+        res
+          .status(400)
+          .json({ message: "the email registered is already in use" });
+
       const hashPassword = hashCreator(password);
-      const hashEmail = hashCreator(email);
+
       const newUser = await registerBusinessLogic.registerManager.createUser(
         user,
         hashPassword,
-        hashEmail
+        email
       );
       res.json({
         message: `user ${user} was successfully added!`,
@@ -46,9 +54,17 @@ const registerController = {
   deleteUser: async (req, res) => {
     try {
       const userId = req.params.userId;
-      const user = await registerBusinessLogic.registerManager.deleteUser(
-        userId
-      );
+      if (
+        userId === "undefined" ||
+        userId === "null" ||
+        userId === "" ||
+        userId === "false"
+      ) {
+        throw new Error(
+          `Id Must be provided to delete user! current id: "${userId}"`
+        );
+      }
+      await registerBusinessLogic.registerManager.deleteUser(userId);
       res.status(200).send("user deleted");
     } catch (error) {
       res.status(500).send(error.message);
