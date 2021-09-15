@@ -36,6 +36,13 @@
       "text": "jhlkljklkj",
       "channelId": "613b925c89494d8e54000001",
       "date": "2021-09-12T10:52:32.773Z"
+    },
+    {
+      "user": "rafael",
+      "id": "6141b8cb6081fd15fb000001",
+      "text": "my name ",
+      "channelId": "613dc56c50904a85fb000001",
+      "date": "2021-09-15T09:11:39.358Z"
     }
   ],
   "users": [
@@ -47,5 +54,18 @@
       "date": "2021-09-13T08:23:45.577Z"
     }
   ],
-  "sessions": []
+  "sessions": [
+    {
+      "id": "613f0a918fda04223d000001",
+      "token": "8a2b9a55d912ad0afa8e50f231602362d21b2f0f905f44bcda46cdbd8e30a3d307634f6566a03f447f964ca7aa664ab90e15b66872a40849fdccb829cf790c10",
+      "user": "rafael",
+      "date": "2021-09-15T08:59:20.828Z"
+    },
+    {
+      "id": "613f0a918fda04223d000001",
+      "token": "ad8e879dc67b27110bd7e70235dc72448c53a61681ce45bf86926e8a22dd5240c790eef0478dac1c09540d90b35893e47b2e34aae0b6e36fd68b442959355cae",
+      "user": "rafael",
+      "date": "2021-09-15T09:11:25.681Z"
+    }
+  ]
 }
