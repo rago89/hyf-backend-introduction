@@ -53,25 +53,5 @@
       "email": "rafael@hyf.com",
       "date": "2021-09-13T08:23:45.577Z"
     }
-  ],
-  "sessions": [
-    {
-      "id": "613f0a918fda04223d000001",
-      "token": "8a2b9a55d912ad0afa8e50f231602362d21b2f0f905f44bcda46cdbd8e30a3d307634f6566a03f447f964ca7aa664ab90e15b66872a40849fdccb829cf790c10",
-      "user": "rafael",
-      "date": "2021-09-15T08:59:20.828Z"
-    },
-    {
-      "id": "613f0a918fda04223d000001",
-      "token": "9f36942b722332dc3da562c36dee5422d2ce21b4cc0849c3acea4a15e9a0536756d35e9c9098c0f239911a3db317c8580346a7dfb6a95780d6c18f62a56190f8",
-      "user": "rafael",
-      "date": "2021-09-17T09:13:11.373Z"
-    },
-    {
-      "id": "613f0a918fda04223d000001",
-      "token": "d849ccd8749e4c3bb48c8557aa8c47107fd6e680cb8069f05666b71ca95cfa820545c054b38b4d05bbc31ab129d5202d7419ccb00906968c8b4ebee0fc30c0bb",
-      "user": "rafael",
-      "date": "2021-09-17T09:13:26.350Z"
-    }
   ]
 }

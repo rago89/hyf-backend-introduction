@@ -1,29 +1,20 @@
-const loginBusinessLogic = require("../business-logic/login");
+const jwt = require("jsonwebtoken");
 
 async function tokenChecker(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
 
-    const authHeaderArray = authHeader.split(" ");
-
-    const token = authHeaderArray[1];
+    const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
       res.status(401).json({ message: "You need to register or sign in!" });
       return;
     }
 
-    if (!(authHeaderArray[0] === "bearer" && authHeaderArray.length === 2)) {
-      res.status(401).json({ message: "You need to register or sign in!" });
-      return;
-    }
+    const jwtChecker = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    const session = await loginBusinessLogic.loginStore.findToken(token);
+    if (!jwtChecker) return res.status(403).send(err.message);
 
-    if (!session) {
-      res.status(401).send(session);
-      return;
-    }
     next();
   } catch (error) {
     res.send(error);
