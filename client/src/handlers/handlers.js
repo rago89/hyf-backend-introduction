@@ -32,6 +32,7 @@ export const register = async (event) => {
     const newUser = await postUser();
     if (newUser.user) {
       state.userId = newUser.user.id;
+      state.password = undefined;
     }
     alert(newUser.message);
   } else if (event.target.innerHTML === "Login") {
@@ -40,6 +41,7 @@ export const register = async (event) => {
     if (userLog.user) {
       state.token = userLog.user.token;
       state.userId = userLog.user.id;
+      state.password = undefined;
     }
     alert(userLog.message);
   }

@@ -34,7 +34,7 @@ const loginController = {
         user: newLog,
       });
     } catch (error) {
-      res.send(error.message);
+      res.status(401).json({ message: `${error.message}` });
     }
   },
   getAllLogins: async (req, res) => {

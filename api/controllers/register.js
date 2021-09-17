@@ -7,8 +7,16 @@ const registerController = {
       const user = req.body.user;
       const password = req.body.password;
       const email = req.body.email;
-      if (!user || !password || !email) {
-        res.status(400).send("Username, password and email are required");
+      if (!user) {
+        res.status(400).json({ message: "Username, is required" });
+        return;
+      }
+      if (!email) {
+        res.status(400).json({ message: "Email, is required" });
+        return;
+      }
+      if (!password) {
+        res.status(400).json({ message: "Password, is required" });
         return;
       }
       const matchEmail =

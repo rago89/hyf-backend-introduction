@@ -10,8 +10,8 @@ const loginManager = {
       user: userName,
       date: new Date(),
     };
-    await loginStore.create(userLog);
-    return userLog;
+    const logRegister = await loginStore.create(userLog);
+    return logRegister;
   },
 
   getLog: async (userId) => {

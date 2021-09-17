@@ -63,9 +63,15 @@
     },
     {
       "id": "613f0a918fda04223d000001",
-      "token": "ad8e879dc67b27110bd7e70235dc72448c53a61681ce45bf86926e8a22dd5240c790eef0478dac1c09540d90b35893e47b2e34aae0b6e36fd68b442959355cae",
+      "token": "9f36942b722332dc3da562c36dee5422d2ce21b4cc0849c3acea4a15e9a0536756d35e9c9098c0f239911a3db317c8580346a7dfb6a95780d6c18f62a56190f8",
       "user": "rafael",
-      "date": "2021-09-15T09:11:25.681Z"
+      "date": "2021-09-17T09:13:11.373Z"
+    },
+    {
+      "id": "613f0a918fda04223d000001",
+      "token": "d849ccd8749e4c3bb48c8557aa8c47107fd6e680cb8069f05666b71ca95cfa820545c054b38b4d05bbc31ab129d5202d7419ccb00906968c8b4ebee0fc30c0bb",
+      "user": "rafael",
+      "date": "2021-09-17T09:13:26.350Z"
     }
   ]
 }
