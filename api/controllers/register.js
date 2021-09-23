@@ -31,7 +31,6 @@ const registerController = {
         hashPassword,
         email
       );
-      console.log(newUser);
       res.json({
         message: `user ${user} was successfully added!`,
         user: newUser,

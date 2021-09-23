@@ -15,8 +15,9 @@ export const channelClicked = (event) => {
 };
 
 export const sendMessage = async () => {
-  await postMessage(document.getElementById("chat-field").value);
-  document.getElementById("chat-field").value = "";
+  const chatField = document.getElementById("chat-field");
+  await postMessage(chatField.value);
+  chatField.value = "";
 };
 
 export const addChannel = async (event) => {
@@ -40,7 +41,7 @@ export const register = async (event) => {
     const userLog = await login();
     if (userLog.user) {
       state.token = userLog.user.token;
-      state.userId = userLog.user.id;
+      state.userId = userLog.user.userId;
       state.password = undefined;
     }
     alert(userLog.message);
@@ -54,6 +55,6 @@ function getUserRegistration() {
 }
 
 function getUserLogin() {
-  state.username = prompt("Please enter username or email");
-  state.password = prompt("please enter a password");
+  state.username = prompt("Please enter your username or email");
+  state.password = prompt("please enter your password");
 }

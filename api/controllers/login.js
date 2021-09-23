@@ -24,6 +24,7 @@ const loginController = {
         res.status(401).json({ message: "You need to register to login" });
         return;
       }
+      console.log(userRegistered);
       const user = {
         userId: userRegistered.id,
         userName: userRegistered.username,
@@ -32,10 +33,10 @@ const loginController = {
 
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
       res.json({
-        message: `user '${user.userName}' was successfully logged`,
+        message: `Welcome '${user.userName}'`,
         user: {
           userId: userRegistered.id,
-          userName: userRegistered.userName,
+          userName: userRegistered.username,
           userEmail: userRegistered.email,
           token: accessToken,
         },

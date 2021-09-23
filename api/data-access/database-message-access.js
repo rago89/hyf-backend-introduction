@@ -72,7 +72,7 @@ const databaseAccess = {
 
   readChannelMessages: async (id = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM message WHERE id = "${id}"`;
+    const queryIdString = `SELECT * FROM channel WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
     const matchId = ids.find((entry) => entry.id === Number(id));

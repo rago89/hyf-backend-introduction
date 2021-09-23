@@ -106,7 +106,7 @@ const databaseAccess = {
 
   findUserLog: async (userOrEmail, password) => {
     const database = await db;
-    const queryString = `SELECT username,email,password FROM user`;
+    const queryString = `SELECT username,email,password,id FROM user`;
     const emails = await database.all(queryString);
     const userMatch = emails.find((entry) => {
       if (

@@ -60,7 +60,7 @@ export const postMessage = async (message) => {
   return await performPost(`channels/${state.currentChannelId}/messages`, {
     message: message,
     userId: state.userId,
-    timestamp: new Date(),
+    date: new Date().toLocaleString(),
   });
 };
 
