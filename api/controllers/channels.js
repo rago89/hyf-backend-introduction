@@ -15,27 +15,36 @@ const channelController = {
       const channel = await channelManager.getChannel(channelId);
       res.status(200).send(JSON.stringify(channel));
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error.message);
     }
   },
   put: async (req, res) => {
     try {
       const channelId = req.params.channelId;
+      console.log(channelId);
+
       const newData = req.body;
-      if (newData.id !== channelId) {
+      console.log(newData.id);
+      if (newData.id !== Number(channelId)) {
         throw Error("Cannot change channel ID after creation!");
       }
       await channelManager.updateChannel(newData);
       res.status(200).send(JSON.stringify(newData));
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error.message);
     }
   },
   post: async (req, res) => {
     try {
       const body = req.body;
-      const channel = await channelManager.createChannel(body.name);
-      res.status(200).send(JSON.stringify(channel));
+      await channelManager.createChannel(body.name);
+      res
+        .status(200)
+        .send(
+          JSON.stringify(
+            `Your new channel: "${body.name}" was successfully created`
+          )
+        );
     } catch (error) {
       res.status(500).send(error);
     }
@@ -50,7 +59,7 @@ const channelController = {
         })
       );
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error.message);
     }
   },
 };

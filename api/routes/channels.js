@@ -8,8 +8,8 @@ const channelRoutes = express.Router();
 //   next();
 // });
 
-channelRoutes.use( (req, res, next)=> {
-  tokenChecker(req, res, next)
+channelRoutes.use((req, res, next) => {
+  tokenChecker(req, res, next);
 });
 
 channelRoutes.get("/", channelController.get);

@@ -1,31 +1,26 @@
-const objectId = require("objectid");
-
-const persistentDataAccess = require("../data-access/persistent");
-
-const registerStore = persistentDataAccess("users");
+const databaseAccess = require("../data-access/database-register-access");
 
 const registerManager = {
   createUser: async (user, password, email) => {
     const newUser = {
-      id: objectId().toString(),
       userName: user,
       password: password,
       email: email,
       date: new Date(),
     };
-    await registerStore.create(newUser);
-    return newUser;
+    // await registerStore.create(newUser);
+    return { user: newUser, userId: await databaseAccess.create(newUser) };
   },
 
   getUser: async (userId) => {
-    return await registerStore.read(userId);
+    return await databaseAccess.read(userId);
   },
   getAllUsers: async () => {
-    return await registerStore.all();
+    return await databaseAccess.all();
   },
   deleteUser: async (userId) => {
-    return await registerStore.remove(userId);
+    return await databaseAccess.remove(userId);
   },
 };
 
-module.exports = { registerManager, registerStore };
+module.exports = registerManager;

@@ -1,39 +1,25 @@
-const objectId = require("objectid");
-
-const persistentDataAccess = require("../data-access/persistent");
-
-const channelStore = persistentDataAccess("channels");
+const databaseAccess = require("../data-access/database-channel-access");
 
 const channelManager = {
   createChannel: async (channelName) => {
-    const id = objectId().toString();
-    const channel = {
-      id: id,
-      name: channelName,
-    };
-    await channelStore.create(channel);
-    return channel;
+    await databaseAccess.create(channelName);
   },
   updateChannel: async (channel) => {
-    const success = await channelStore.update(channel.id, channel);
+    const success = await databaseAccess.update(channel.id, channel.name);
     if (!success) {
       throw new Error("Cannot update a channel that doesn't exist!");
     }
     return channel;
   },
   removeChannel: async (channelId) => {
-    await channelStore.remove(channelId);
-    return true;
+    const removeChannel = await databaseAccess.remove(channelId);
+    return removeChannel;
   },
   getChannel: async (channelId) => {
-    const channel = await channelStore.read(channelId);
-    if (!channel) {
-      throw new Error(`Could not find channel with id ${channelId}!`);
-    }
-    return channel;
+    return await databaseAccess.read(channelId);
   },
   getAllChannels: async () => {
-    return await channelStore.all();
+    return await databaseAccess.all();
   },
 };
 

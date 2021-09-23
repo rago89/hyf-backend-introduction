@@ -1,5 +1,5 @@
 require("dotenv").config();
-const registerBusinessLogic = require("../business-logic/register");
+const databaseAccess = require("../data-access/database-register-access");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -15,11 +15,10 @@ const loginController = {
         return;
       }
       const hashPassword = hashCreator(password);
-      const userRegistered =
-        await registerBusinessLogic.registerStore.findUserLog(
-          userOrEmail,
-          hashPassword
-        );
+      const userRegistered = await databaseAccess.findUserLog(
+        userOrEmail,
+        hashPassword
+      );
 
       if (!userRegistered) {
         res.status(401).json({ message: "You need to register to login" });
@@ -27,13 +26,13 @@ const loginController = {
       }
       const user = {
         userId: userRegistered.id,
-        userName: userRegistered.userName,
+        userName: userRegistered.username,
         userEmail: userRegistered.email,
       };
 
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
       res.json({
-        message: `user "${user.userName}" was successfully logged`,
+        message: `user '${user.userName}' was successfully logged`,
         user: {
           userId: userRegistered.id,
           userName: userRegistered.userName,

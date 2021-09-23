@@ -1,43 +1,24 @@
-const objectId = require("objectid");
-
-const persistentDataAccess = require("../data-access/persistent");
-
-const messageStore = persistentDataAccess("messages");
+const databaseAccess = require("../data-access/database-message-access");
 
 const messageManager = {
-  createMessage: async (user, messageContent, channelId) => {
-    const message = {
-      user: user,
-      id: objectId().toString(),
-      text: messageContent,
-      channelId: channelId,
-      date: new Date(),
-    };
-    await messageStore.create(message);
-    return message;
+  createMessage: async (channelId, messageBody) => {
+    await databaseAccess.create(channelId, messageBody);
   },
-  updateMessage: async (message) => {
-    return await messageStore.update(message.id, message);
+  updateMessage: async (newData = {}) => {
+    await databaseAccess.update(newData.id, newData.message);
   },
   removeMessage: async (messageId) => {
-    return await messageStore.remove(messageId);
+    const removeMessage = await databaseAccess.remove(messageId);
+    return removeMessage;
   },
   getMessage: async (messageId) => {
-    // TODO: implement
+    return await databaseAccess.read(messageId);
+  },
+  getChannelMessages: async (channelId) => {
+    return await databaseAccess.readChannelMessages(channelId);
   },
   getAllMessages: async () => {
-    return await messageStore.all();
-  },
-  getMessagesForChannel: async (channelId) => {
-    const allMessages = await messageStore.all();
-    const channelMessages = allMessages.filter(
-      (bodyMessage) => bodyMessage.channelId === channelId
-    );
-    if (channelMessages.length === 0) {
-      throw new Error("There are not messages with the specified channel");
-    }
-
-    return channelMessages;
+    return await databaseAccess.all();
   },
 };
 

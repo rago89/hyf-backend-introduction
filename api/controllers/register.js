@@ -1,4 +1,5 @@
-const registerBusinessLogic = require("../business-logic/register");
+const databaseAccess = require("../data-access/database-register-access");
+const registerManager = require("../business-logic/register");
 const crypto = require("crypto");
 
 const registerController = {
@@ -19,32 +20,29 @@ const registerController = {
         res.status(400).json({ message: "Password, is required" });
         return;
       }
-      const matchEmail =
-        await registerBusinessLogic.registerStore.findUserByEmail(email);
+      const matchEmail = await databaseAccess.findUserByEmail(email);
 
-      if (matchEmail)
-        res
-          .status(400)
-          .json({ message: "the email registered is already in use" });
-
+      if (matchEmail) return;
+      console.log("Why");
       const hashPassword = hashCreator(password);
 
-      const newUser = await registerBusinessLogic.registerManager.createUser(
+      const newUser = await registerManager.createUser(
         user,
         hashPassword,
         email
       );
+      console.log(newUser);
       res.json({
         message: `user ${user} was successfully added!`,
         user: newUser,
       });
     } catch (error) {
-      res.status(400).send(error);
+      res.status(400).send(error.message);
     }
   },
   getAllUsers: async (req, res) => {
     try {
-      const users = await registerBusinessLogic.registerManager.getAllUsers();
+      const users = await registerManager.getAllUsers();
       res.send(JSON.stringify(users));
     } catch (error) {
       res.status(500).send(error);
@@ -53,7 +51,7 @@ const registerController = {
   getUser: async (req, res) => {
     try {
       const userId = req.params.userId;
-      const user = await registerBusinessLogic.registerManager.getUser(userId);
+      const user = await registerManager.getUser(userId);
       res.status(200).send(JSON.stringify(user));
     } catch (error) {
       res.status(400).send(error);
@@ -72,7 +70,7 @@ const registerController = {
           `Id Must be provided to delete user! current id: "${userId}"`
         );
       }
-      await registerBusinessLogic.registerManager.deleteUser(userId);
+      await registerManager.deleteUser(userId);
       res.status(200).send("user deleted");
     } catch (error) {
       res.status(500).send(error.message);

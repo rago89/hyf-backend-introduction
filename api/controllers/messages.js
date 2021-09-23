@@ -1,7 +1,7 @@
 const messageManager = require("../business-logic/messages");
 
 const messageController = {
-  get: async (req, res) => {
+  getAll: async (req, res) => {
     try {
       const messages = await messageManager.getAllMessages();
       res.send(JSON.stringify(messages));
@@ -12,37 +12,49 @@ const messageController = {
   getMessagesForChannel: async (req, res) => {
     try {
       const channelId = req.params.channelId;
-      const messages = await messageManager.getMessagesForChannel(channelId);
+      const messages = await messageManager.getChannelMessages(channelId);
       res.send(JSON.stringify(messages));
     } catch (error) {
       res.status(400).send(error.name + ": " + error.message);
     }
   },
-  put: async (req, res) => {
+  getMessage: async (req, res) => {
     try {
-      const body = req.body;
-      const modifyMessage = await messageManager.updateMessage(body);
-      res.status(200).send(modifyMessage);
+      const messageId = req.params.messageId;
+      const messages = await messageManager.getMessage(messageId);
+      res.send(JSON.stringify(messages));
+    } catch (error) {
+      res.status(400).send(error.name + ": " + error.message);
+    }
+  },
+  patch: async (req, res) => {
+    try {
+      const messageId = req.params.messageId;
+      const newData = req.body;
+      if (!newData.id) {
+        throw Error("Missing the id in the body of the message!");
+      }
+      if (newData.message === "undefined" || newData.message === "") {
+        throw Error("Content to update is empty!");
+      }
       if (newData.id !== messageId) {
         throw Error("Cannot change channel ID after creation!");
       }
+      await messageManager.updateMessage(newData);
+      res.status(200).send(`Message updated successfully`);
     } catch (error) {
-      res.status(400).send(error);
+      res.status(400).send(error.message);
     }
   },
   post: async (req, res) => {
     try {
       const channelId = req.params.channelId;
-      const message = req.body.message;
-      const user = req.body.user;
-      const newMessage = await messageManager.createMessage(
-        user,
-        message,
-        channelId
-      );
-      res.status(200).send(JSON.stringify(newMessage));
+      const body = req.body;
+      await messageManager.createMessage(channelId, body);
+      res.status(200).send(`message sent successfully`);
     } catch (err) {
-      res.status(500).send(err);
+      console.error(err);
+      res.status(500).send(err.message);
     }
   },
   delete: async (req, res) => {
@@ -55,7 +67,7 @@ const messageController = {
         })
       );
     } catch (error) {
-      res.status(400).send(error.name + ": " + error.message);
+      res.status(400).send(error.name + ": " + error.stack);
     }
   },
 };
