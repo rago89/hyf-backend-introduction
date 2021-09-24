@@ -5,10 +5,6 @@ const messageController = require("../controllers/messages");
 // create sub-route
 const messageRoutes = express.Router();
 
-// messageRoutes.use((req, res, next) => {
-//   tokenChecker(req, res, next);
-// });
-
 // get all messages
 messageRoutes.get("/messages", messageController.getAll);
 // get messages from an specific channel

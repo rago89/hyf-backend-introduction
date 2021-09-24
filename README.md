@@ -42,7 +42,7 @@ Returns json data about all channels in the system.
 
 - **Result:**
 
-  ```
+  ```js
   [
     {
       "name": "Awesome Channel",
@@ -74,7 +74,7 @@ Returns json data about a single channel.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "name": "Awesome Channel",
     "id": "ZAE12E124321ZE"
@@ -86,6 +86,8 @@ Returns json data about a single channel.
 ## Delete Channel
 
 Removes a channel from the system.
+
+> To use this channel, you must register and them login, once logged in in Postman you need to put in the header section as key **Authorization** and value **baerer token** where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
@@ -103,7 +105,7 @@ Removes a channel from the system.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "message": "Channel ZAE12E124321ZE was successfully deleted!"
   }
@@ -114,6 +116,8 @@ Removes a channel from the system.
 ## Update Channel
 
 Replaces a channel with its updated version.
+
+> To use this channel, you must register and them login, once logged in in Postman you need to put in the header section as key **Authorization** and value **baerer token** where **token** is the code that you are going to receive as response once you are logged in.
 
 - **URL**
 
@@ -130,15 +134,17 @@ Replaces a channel with its updated version.
   `channelId=[string]`
 
 - **Body**
-  ```
+
+  ```js
   {
     "name": "new name of the channel",
     "id": "the channel id"
   }
   ```
+
 - **Result:**
 
-  ```
+  ```js
   {
     "name": "Awesome Channel",
     "id": "ZAE12E124321ZE"
@@ -148,6 +154,8 @@ Replaces a channel with its updated version.
 ---
 
 ## Create Channel
+
+> To use this channel, you must register and them login, once logged in in Postman you need to put in the header section as key **Authorization** and value **baerer token** where **token** is the code that you are going to receive as response once you are logged in.
 
 Creates a new channel with the given name.
 
@@ -161,7 +169,7 @@ Creates a new channel with the given name.
 
 - **Body**
 
-  ```
+  ```js
   {
     "name": "the name of the channel you wish to create",
   }
@@ -169,7 +177,7 @@ Creates a new channel with the given name.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "name": "Awesome Channel",
     "id": "ZAE12E124321ZE"
@@ -179,6 +187,8 @@ Creates a new channel with the given name.
 ---
 
 ## Messages
+
+> To use _all messages channel_, you must register and them login, once logged in in Postman you need to put in the header section as key **Authorization** and value **baerer token** where **token** is the code that you are going to receive as response once you are logged in.
 
 ## Get all messages
 
@@ -194,7 +204,7 @@ Returns a json array of all messages currently in the system.
 
 - **Result:**
 
-  ```
+  ```js
   [
   {
     "text": "The content of the massage",
@@ -229,7 +239,7 @@ Returns a json array of all messages that belong to the specified channel.
 
 - **Result:**
 
-  ```
+  ```js
   [
   {
     "text": "The content of the massage",
@@ -264,7 +274,7 @@ Removes the specified message from the system.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "message": "Message BFE12E1243211ZE was successfully deleted!"
   }
@@ -292,7 +302,7 @@ Updates the specified message with the new content.
 
 - **Body**
 
-  ```
+  ```js
   {
      "text": "The content of the massage",
      "id": "BFE12E1243211ZE",
@@ -304,7 +314,7 @@ Updates the specified message with the new content.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "text": "The content of the massage",
     "id": "BFE12E1243211ZE",
@@ -336,7 +346,7 @@ Creates a new messsage in the specified channel.
 
 - **Body**
 
-  ```
+  ```js
   {
      "text": "The content of the massage",
      "user": "Name of the user who posted the message",
@@ -345,7 +355,7 @@ Creates a new messsage in the specified channel.
 
 - **Result:**
 
-  ```
+  ```js
   {
     "text": "The content of the massage",
     "id": "BFE12E1243211ZE",

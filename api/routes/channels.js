@@ -8,12 +8,13 @@ const channelRoutes = express.Router();
 //   next();
 // });
 
+channelRoutes.get("/", channelController.get);
+channelRoutes.get("/:channelId", channelController.getChannelById);
+
 channelRoutes.use((req, res, next) => {
   tokenChecker(req, res, next);
 });
 
-channelRoutes.get("/", channelController.get);
-channelRoutes.get("/:channelId", channelController.getChannelById);
 channelRoutes.delete("/:channelId", channelController.delete);
 channelRoutes.put("/:channelId", channelController.put);
 channelRoutes.post("/", channelController.post);
