@@ -57,28 +57,28 @@ const databaseAccess = {
 
   read: async (id = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM user`;
+    const queryIdString = `SELECT id FROM user`;
     const ids = await database.all(queryIdString);
 
     const matchId = ids.find((entry) => entry.id === Number(id));
     if (!matchId) {
       throw new Error(`Cannot get users, channel doesn't exist`);
     }
-    const queryString = `SELECT * FROM user WHERE id = '${id}'`;
+    const queryString = `SELECT id,username,email,date FROM user WHERE id = '${id}'`;
     const user = await database.all(queryString);
     return user;
   },
 
-  readChannelUsers: async (id = "") => {
+  readChannelUsers: async (userId = "", channelId = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM user WHERE id = '${id}'`;
+    const queryIdString = `SELECT id FROM user WHERE id = '${userId}'`;
     const ids = await database.all(queryIdString);
 
     const matchId = ids.find((entry) => entry.id === Number(id));
     if (!matchId) {
       throw new Error(`Cannot get user, id doesn't exist`);
     }
-    const queryString = `SELECT * FROM user WHERE channelId = '${id}'`;
+    const queryString = `SELECT id,username,email,date FROM user WHERE channelId = '${channelId}'`;
     const user = await database.all(queryString);
     return user;
   },

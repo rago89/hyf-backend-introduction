@@ -44,7 +44,7 @@ const registerController = {
       const users = await registerManager.getAllUsers();
       res.send(JSON.stringify(users));
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).json({ message: error.message });
     }
   },
   getUser: async (req, res) => {
@@ -53,7 +53,7 @@ const registerController = {
       const user = await registerManager.getUser(userId);
       res.status(200).send(JSON.stringify(user));
     } catch (error) {
-      res.status(400).send(error);
+      res.status(400).json({ message: error.message });
     }
   },
   deleteUser: async (req, res) => {
@@ -72,7 +72,7 @@ const registerController = {
       await registerManager.deleteUser(userId);
       res.status(200).send("user deleted");
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).json({ message: error.message });
     }
   },
 };
