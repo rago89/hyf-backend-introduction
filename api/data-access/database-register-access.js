@@ -20,9 +20,8 @@ const databaseAccess = {
       VALUES(NULL,'${newUser.userName}','${newUser.password}',"${newUser.email}","${newUser.date}")`;
     await database.all(queryString);
 
-    const lastIdQueryString = `SELECT id from user WHERE email = '${newUser.email}' order by id DESC limit 1`;
+    const lastIdQueryString = `SELECT id,username,email,date from user WHERE email = '${newUser.email}' order by id DESC limit 1`;
     const userId = await database.all(lastIdQueryString);
-    console.log(userId);
     return userId;
   },
 

@@ -23,7 +23,7 @@ const registerController = {
       const matchEmail = await databaseAccess.findUserByEmail(email);
 
       if (matchEmail) return;
-      console.log("Why");
+
       const hashPassword = hashCreator(password);
 
       const newUser = await registerManager.createUser(
@@ -36,7 +36,7 @@ const registerController = {
         user: newUser,
       });
     } catch (error) {
-      res.status(400).send(error.message);
+      res.status(400).json({ message: error.message });
     }
   },
   getAllUsers: async (req, res) => {

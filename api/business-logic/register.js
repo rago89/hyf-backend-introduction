@@ -8,8 +8,9 @@ const registerManager = {
       email: email,
       date: new Date(),
     };
-    // await registerStore.create(newUser);
-    return { user: newUser, userId: await databaseAccess.create(newUser) };
+    const storeUser = await databaseAccess.create(newUser);
+    console.log(storeUser);
+    return storeUser;
   },
 
   getUser: async (userId) => {
