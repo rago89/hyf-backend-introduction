@@ -85,7 +85,7 @@ const databaseAccess = {
 
   all: async () => {
     const database = await db;
-    const queryString = `SELECT * FROM user`;
+    const queryString = `SELECT id,username,email,date FROM user`;
     const users = await database.all(queryString);
     return users;
   },
