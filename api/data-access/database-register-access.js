@@ -1,15 +1,9 @@
-"use strict";
-const fs = require("fs");
+/* eslint-disable array-callback-return */
 const path = require("path");
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3").verbose();
 
 const DB_PATH = path.join(__dirname, "..", "..", "data", "slack-clone.sqlite");
-
-if (!fs.existsSync(DB_PATH)) {
-  console.log("hu");
-  const db = new sqlite3.Database(DB_PATH);
-}
 
 const db = open({ filename: DB_PATH, driver: sqlite3.Database });
 
@@ -62,7 +56,7 @@ const databaseAccess = {
 
     const matchId = ids.find((entry) => entry.id === Number(id));
     if (!matchId) {
-      throw new Error(`Cannot get users, channel doesn't exist`);
+      throw new Error(`Cannot get user, 'Id' doesn't exist`);
     }
     const queryString = `SELECT id,username,email,date FROM user WHERE id = '${id}'`;
     const user = await database.all(queryString);
@@ -74,9 +68,9 @@ const databaseAccess = {
     const queryIdString = `SELECT id FROM user WHERE id = '${userId}'`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
+    const matchId = ids.find((entry) => entry.id === Number(userId));
     if (!matchId) {
-      throw new Error(`Cannot get user, id doesn't exist`);
+      throw new Error(`Cannot get users, channel doesn't exist`);
     }
     const queryString = `SELECT id,username,email,date FROM user WHERE channelId = '${channelId}'`;
     const user = await database.all(queryString);
@@ -107,6 +101,8 @@ const databaseAccess = {
     const database = await db;
     const queryString = `SELECT username,email,password,id FROM user`;
     const emails = await database.all(queryString);
+
+    // eslint-disable-next-line consistent-return
     const userMatch = emails.find((entry) => {
       if (
         (userOrEmail === entry.username && password !== entry.password) ||

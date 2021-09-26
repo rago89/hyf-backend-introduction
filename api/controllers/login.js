@@ -1,13 +1,15 @@
 require("dotenv").config();
-const databaseAccess = require("../data-access/database-register-access");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+const hashCreator = require("../utils/hash");
+const databaseAccess = require("../data-access/database-register-access");
 
 const loginController = {
   addUserLogin: async (req, res) => {
     try {
-      const userOrEmail = req.body.userName;
-      const password = req.body.password;
+      const { userOrEmail, password } = req.body;
+
+      console.log(userOrEmail, password);
+
       if (!userOrEmail || !password) {
         res
           .status(401)
@@ -24,7 +26,7 @@ const loginController = {
         res.status(401).json({ message: "You need to register to login" });
         return;
       }
-      console.log(userRegistered);
+
       const user = {
         userId: userRegistered.id,
         userName: userRegistered.username,
@@ -46,9 +48,5 @@ const loginController = {
     }
   },
 };
-
-function hashCreator(input) {
-  return crypto.createHash("sha1").update(input).digest("hex");
-}
 
 module.exports = loginController;

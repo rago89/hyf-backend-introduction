@@ -1,9 +1,13 @@
 const express = require("express");
 const messageController = require("../controllers/messages");
-// const tokenChecker = require("../middleware/tokenLogin");
+const tokenChecker = require("../middleware/token-login");
 
 // create sub-route
 const messageRoutes = express.Router();
+
+messageRoutes.use((req, res, next) => {
+  tokenChecker(req, res, next);
+});
 
 // get all messages
 messageRoutes.get("/messages", messageController.getAll);

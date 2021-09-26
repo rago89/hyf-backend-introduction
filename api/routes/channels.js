@@ -1,12 +1,8 @@
 const express = require("express");
 const channelController = require("../controllers/channels");
-const tokenChecker = require("../middleware/tokenLogin");
-const channelRoutes = express.Router();
+const tokenChecker = require("../middleware/token-login");
 
-// channelRoutes.use((req, res, next) => {
-//   console.log("api!");
-//   next();
-// });
+const channelRoutes = express.Router();
 
 channelRoutes.get("/", channelController.get);
 channelRoutes.get("/:channelId", channelController.getChannelById);

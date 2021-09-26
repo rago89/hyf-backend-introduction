@@ -1,13 +1,12 @@
+const hashCreator = require("../utils/hash");
 const databaseAccess = require("../data-access/database-register-access");
 const registerManager = require("../business-logic/register");
-const crypto = require("crypto");
 
 const registerController = {
   createUser: async (req, res) => {
     try {
-      const user = req.body.user;
-      const password = req.body.password;
-      const email = req.body.email;
+      const { user, email, password } = req.body;
+
       if (!user) {
         res.status(400).json({ message: "Username, is required" });
         return;
@@ -49,7 +48,7 @@ const registerController = {
   },
   getUser: async (req, res) => {
     try {
-      const userId = req.params.userId;
+      const { userId } = req.params;
       const user = await registerManager.getUser(userId);
       res.status(200).send(JSON.stringify(user));
     } catch (error) {
@@ -58,7 +57,7 @@ const registerController = {
   },
   deleteUser: async (req, res) => {
     try {
-      const userId = req.params.userId;
+      const { userId } = req.params;
       if (
         userId === "undefined" ||
         userId === "null" ||
@@ -76,9 +75,5 @@ const registerController = {
     }
   },
 };
-
-function hashCreator(input) {
-  return crypto.createHash("sha1").update(input).digest("hex");
-}
 
 module.exports = registerController;

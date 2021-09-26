@@ -74,7 +74,7 @@
 
     "prettier/prettier": ["error"],
 
-    "prefer-arrow/prefer-arrow-functions": ["warn"],
+
 
     "folders/match-regex": [2, "^(?!.*([-])\\1{1})[a-z-]+$", "src"],
     "filenames/match-regex": [2, "^(?!.*([-])\\1{1})[a-z-.spec]+$"],

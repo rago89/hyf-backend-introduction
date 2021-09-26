@@ -11,7 +11,7 @@ const channelController = {
   },
   getChannelById: async (req, res) => {
     try {
-      const channelId = req.params.channelId;
+      const { channelId } = req.params;
       const channel = await channelManager.getChannel(channelId);
       res.status(200).send(JSON.stringify(channel));
     } catch (error) {
@@ -20,7 +20,7 @@ const channelController = {
   },
   put: async (req, res) => {
     try {
-      const channelId = req.params.channelId;
+      const { channelId } = req.params;
       console.log(channelId);
 
       const newData = req.body;
@@ -36,7 +36,7 @@ const channelController = {
   },
   post: async (req, res) => {
     try {
-      const body = req.body;
+      const { body } = req;
       await channelManager.createChannel(body.name);
       res
         .status(200)
@@ -51,7 +51,7 @@ const channelController = {
   },
   delete: async (req, res) => {
     try {
-      const channelId = req.params.channelId;
+      const { channelId } = req.params;
       await channelManager.removeChannel(channelId);
       res.status(200).send(
         JSON.stringify({

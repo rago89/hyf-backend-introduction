@@ -74,7 +74,7 @@ export const postUser = async () => {
 
 export const login = async () => {
   return await performPost(`login`, {
-    userName: state.username,
+    userOrEmail: state.username,
     password: state.password,
   });
 };
