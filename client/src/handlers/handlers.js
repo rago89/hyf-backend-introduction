@@ -32,9 +32,10 @@ export const register = async (event) => {
     getUserRegistration();
     const newUser = await postUser();
     if (newUser.user) {
-      state.userId = newUser.user[0].id;
+      state.userId = newUser.user.id;
       state.password = undefined;
     }
+    console.log(state);
     alert(newUser.message);
   } else if (event.target.innerHTML === "Login") {
     getUserLogin();

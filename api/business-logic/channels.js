@@ -16,10 +16,10 @@ const channelManager = {
     return removeChannel;
   },
   getChannel: async (channelId) => {
-    return await databaseAccess.read(channelId);
+    return databaseAccess.read(channelId);
   },
   getAllChannels: async () => {
-    return await databaseAccess.all();
+    return databaseAccess.all();
   },
 };
 

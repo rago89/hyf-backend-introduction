@@ -9,7 +9,7 @@ const registerManager = {
       date: new Date(),
     };
     const storeUser = await databaseAccess.create(newUser);
-    console.log(storeUser);
+
     return storeUser;
   },
 

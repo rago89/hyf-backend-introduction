@@ -21,12 +21,10 @@ const databaseAccess = {
 
   update: async (id, newData) => {
     const database = await db;
-    const queryIdString = `SELECT * FROM message`;
+    const queryIdString = `SELECT * FROM message WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(newData.id));
-    console.log(newData.id);
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot update message, id doesn't exist`);
     }
     const queryUpdateString = `
@@ -38,11 +36,10 @@ const databaseAccess = {
 
   remove: async (id) => {
     const database = await db;
-    const queryIdString = `SELECT * FROM message`;
+    const queryIdString = `SELECT * FROM message WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot delete message, id doesn't exist`);
     }
     const queryStringToRemove = `DELETE FROM message WHERE id ="${id}"`;
@@ -51,11 +48,10 @@ const databaseAccess = {
 
   read: async (id = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM message`;
+    const queryIdString = `SELECT * FROM message WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot get messages, channel doesn't exist`);
     }
     const queryString = `SELECT * FROM message WHERE id = "${id}"`;
@@ -68,8 +64,7 @@ const databaseAccess = {
     const queryIdString = `SELECT * FROM channel WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot get message, id doesn't exist`);
     }
     const queryString = `SELECT * FROM message WHERE channelId = "${id}"`;

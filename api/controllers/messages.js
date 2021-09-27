@@ -67,7 +67,7 @@ const messageController = {
         })
       );
     } catch (error) {
-      res.status(400).send(`${error.name}: ${error.stack}`);
+      res.status(400).send(`${error.message}`);
     }
   },
 };

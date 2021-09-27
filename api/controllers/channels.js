@@ -21,8 +21,6 @@ const channelController = {
   put: async (req, res) => {
     try {
       const { channelId } = req.params;
-      console.log(channelId);
-
       const newData = req.body;
       console.log(newData.id);
       if (newData.id !== Number(channelId)) {
@@ -42,7 +40,7 @@ const channelController = {
         .status(200)
         .send(
           JSON.stringify(
-            `Your new channel: "${body.name}" was successfully created`
+            `Your new channel: '${body.name}' was successfully created`
           )
         );
     } catch (error) {

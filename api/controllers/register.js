@@ -19,9 +19,8 @@ const registerController = {
         res.status(400).json({ message: "Password, is required" });
         return;
       }
-      const matchEmail = await databaseAccess.findUserByEmail(email);
 
-      if (matchEmail) return;
+      await databaseAccess.findUserByEmail(email);
 
       const hashPassword = hashCreator(password);
 

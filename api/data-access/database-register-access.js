@@ -12,16 +12,16 @@ const databaseAccess = {
     const database = await db;
     const queryString = `INSERT INTO user
       VALUES(NULL,'${newUser.userName}','${newUser.password}',"${newUser.email}","${newUser.date}")`;
-    await database.all(queryString);
+    await database.run(queryString);
 
-    const lastIdQueryString = `SELECT id,username,email,date from user WHERE email = '${newUser.email}' order by id DESC limit 1`;
-    const userId = await database.all(lastIdQueryString);
-    return userId;
+    const lastIdQueryString = `SELECT id,username,email,date from user WHERE email = '${newUser.email}'`;
+    const user = await database.get(lastIdQueryString);
+    return user;
   },
 
   update: async (id, newUser) => {
     const database = await db;
-    const queryIdString = `SELECT * FROM user`;
+    const queryIdString = `SELECT * FROM user WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
     const matchId = ids.find((entry) => entry.id === Number(id));
@@ -38,11 +38,10 @@ const databaseAccess = {
 
   remove: async (id) => {
     const database = await db;
-    const queryIdString = `SELECT * FROM user`;
+    const queryIdString = `SELECT * FROM user WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot delete user, id doesn't exist`);
     }
     const queryStringToRemove = `DELETE FROM user WHERE id ='${id}'`;
@@ -51,11 +50,10 @@ const databaseAccess = {
 
   read: async (id = "") => {
     const database = await db;
-    const queryIdString = `SELECT id FROM user`;
+    const queryIdString = `SELECT id FROM user WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot get user, 'Id' doesn't exist`);
     }
     const queryString = `SELECT id,username,email,date FROM user WHERE id = '${id}'`;
@@ -68,8 +66,7 @@ const databaseAccess = {
     const queryIdString = `SELECT id FROM user WHERE id = '${userId}'`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(userId));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot get users, channel doesn't exist`);
     }
     const queryString = `SELECT id,username,email,date FROM user WHERE channelId = '${channelId}'`;
@@ -86,15 +83,15 @@ const databaseAccess = {
 
   findUserByEmail: async (email) => {
     const database = await db;
-    const queryString = `SELECT email FROM user`;
+    const queryString = `SELECT email FROM user WHERE email = '${email}'`;
     const emails = await database.all(queryString);
-    const matchEmail = emails.find((entry) => entry.email === email);
-    if (matchEmail) {
+    console.log(emails);
+
+    if (emails.length !== 0) {
       throw new Error(
-        `Cannot create user with the email: ${matchEmail.email}, already exists`
+        `Cannot create user with the email: ${emails[0].email}, already exists`
       );
     }
-    return matchEmail;
   },
 
   findUserLog: async (userOrEmail, password) => {

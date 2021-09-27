@@ -12,13 +12,13 @@ const messageManager = {
     return removeMessage;
   },
   getMessage: async (messageId) => {
-    return await databaseAccess.read(messageId);
+    return databaseAccess.read(messageId);
   },
   getChannelMessages: async (channelId) => {
-    return await databaseAccess.readChannelMessages(channelId);
+    return databaseAccess.readChannelMessages(channelId);
   },
   getAllMessages: async () => {
-    return await databaseAccess.all();
+    return databaseAccess.all();
   },
 };
 

@@ -15,11 +15,10 @@ const databaseAccess = {
 
   update: async (id = "", newChannelName = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM channel`;
+    const queryIdString = `SELECT * FROM channel WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot update channel, id doesn't exist`);
     }
     const queryUpdateString = `
@@ -32,24 +31,23 @@ const databaseAccess = {
 
   remove: async (id) => {
     const database = await db;
-    const queryIdString = `SELECT * FROM channel`;
+    const queryIdString = `SELECT * FROM channel WHERE id = ${id}`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot delete channel, id doesn't exist`);
     }
+
     const queryStringToRemove = `DELETE FROM Channel WHERE id ='${id}'`;
     await database.all(queryStringToRemove);
   },
 
   read: async (id = "") => {
     const database = await db;
-    const queryIdString = `SELECT * FROM channel`;
+    const queryIdString = `SELECT * FROM channel WHERE id = "${id}"`;
     const ids = await database.all(queryIdString);
 
-    const matchId = ids.find((entry) => entry.id === Number(id));
-    if (!matchId) {
+    if (ids.length === 0) {
       throw new Error(`Cannot get channel, id doesn't exist`);
     }
     const queryString = `SELECT * FROM channel WHERE id = '${id}'`;
