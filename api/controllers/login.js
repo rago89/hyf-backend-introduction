@@ -8,8 +8,6 @@ const loginController = {
     try {
       const { userOrEmail, password } = req.body;
 
-      console.log(userOrEmail, password);
-
       if (!userOrEmail || !password) {
         res
           .status(401)

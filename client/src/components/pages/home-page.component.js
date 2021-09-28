@@ -1,7 +1,11 @@
 // components
 import { getHeaderInnerHtml } from "../layout/getHeaderComponent.js";
 import { footerComponent } from "../layout/footerComponent.js";
-import { registerUpdates } from "../layout/registerUpdates.js";
+// import { registerUpdates } from "../layout/register-updates.js";
+import { getChannelListInnerHtml } from "../layout/channelList.js";
+import { getMessagesInnerHtml } from "../layout/getMessages.js";
+
+import { state } from "../../state/state.js";
 // handlers
 import {
   sendMessage,
@@ -9,6 +13,8 @@ import {
   addChannel,
   register,
 } from "../../handlers/handlers.js";
+
+import { fetchChannels } from "../../api-calls/calls.js";
 
 export const homePage = async () => {
   const el = document.createElement("div");
@@ -38,12 +44,12 @@ export const homePage = async () => {
 
   el.appendChild(footerEl);
 
-  registerUpdates(channelListingsEl, messageHistoryEl);
+  const channels = await fetchChannels();
+  channelListingsEl.innerHTML = getChannelListInnerHtml(channels);
 
   // register event handlers:
-  document.addEventListener("keyup", function (event) {
+  document.addEventListener("keyup", (event) => {
     if (event.keyCode === 13) {
-      // alert("Enter is pressed!");
       sendMessage();
     }
   });

@@ -51,7 +51,7 @@ const messageController = {
       const { channelId } = req.params;
       const { body } = req;
       await messageManager.createMessage(channelId, body);
-      res.status(200).send(`message sent successfully`);
+      res.status(200).json({ message: "message sent successfully" });
     } catch (err) {
       console.error(err);
       res.status(500).send(err.message);

@@ -1,4 +1,5 @@
 import { state } from "../state/state.js";
+import { registerUpdates } from "../components/layout/register-updates.js";
 import {
   postChannel,
   postMessage,
@@ -12,6 +13,10 @@ export const channelClicked = (event) => {
   }
   state.currentChannelId = event.target.dataset.channelId;
   state.currentChannelName = event.target.dataset.channelName;
+  const headerChannelName = document.getElementById("channelHeaderName");
+  headerChannelName.innerHTML = state.currentChannelName;
+  const messageHistory = document.querySelector(".message-history");
+  registerUpdates(messageHistory);
 };
 
 export const sendMessage = async () => {
@@ -35,7 +40,6 @@ export const register = async (event) => {
       state.userId = newUser.user.id;
       state.password = undefined;
     }
-    console.log(state);
     alert(newUser.message);
   } else if (event.target.innerHTML === "Login") {
     getUserLogin();
